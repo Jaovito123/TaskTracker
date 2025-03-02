@@ -2,15 +2,15 @@ package org.TaskTracker;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String [] args) {
-        LocalDate data = LocalDate.of(2025, 3, 2);
-
-        Task task = new Task(123, "Um teste", "In_Progress", data, data);
-        Map<String, Object> taskMap = TaskManeger.createTask(task);
-
-        System.out.println(taskMap);
+        ArrayList<Map<String, Object>> tasks = FileHandler.loadJson();
+        TaskManager.createTask(tasks, "Estudar Java", "Pendente");
+        FileHandler.saveJson(tasks);
+        TaskManager.showAllTasks(tasks);
 
     }
 }
