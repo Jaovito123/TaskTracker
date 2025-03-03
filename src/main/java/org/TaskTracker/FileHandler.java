@@ -38,7 +38,7 @@ public class FileHandler {
                     if (!task.endsWith("}")) {
                         task += "}";
                     }
-                    tasks.add(Task.fromJson(task)); // Agora converte para Task
+                    tasks.add(Task.fromJson(task));
                 }
             }
         } catch (IOException e) {
@@ -52,7 +52,7 @@ public class FileHandler {
         try (FileWriter writer = new FileWriter(createJsonFile())) {
             writer.write("[\n");
             for (int i = 0; i < tasks.size(); i++) {
-                writer.write(tasks.get(i).toJsonObject()); // Agora funciona corretamente
+                writer.write(tasks.get(i).toJsonObject());
                 if (i < tasks.size() - 1) {
                     writer.write(",\n");
                 }
