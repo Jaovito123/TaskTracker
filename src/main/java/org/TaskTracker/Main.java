@@ -1,16 +1,27 @@
 package org.TaskTracker;
 
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.List;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String [] args) {
-        ArrayList<Map<String, Object>> tasks = FileHandler.loadJson();
-        TaskManager.createTask(tasks, "Estudar Java", "Pendente");
+
+        ArrayList<String> tasks = new ArrayList<>();
+
+        Task task1 = new Task("Estudar Java");
+        Task task2 = new Task("Estudar Spring Boot");
+        Task task3 = new Task("Estudar MySQL");
+
+        String json = task1.toJsonObject();
+        tasks.add(json);
+        String json2 = task2.toJsonObject();
+        tasks.add(json2);
+        String json3 = task3.toJsonObject();
+        tasks.add(json3);
+
         FileHandler.saveJson(tasks);
-        TaskManager.showAllTasks(tasks);
+        System.out.println(tasks);
 
     }
 }
