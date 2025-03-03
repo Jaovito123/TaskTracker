@@ -12,7 +12,7 @@ public class Main {
             System.exit(1);
         }
 
-        String command = args[0].toLowerCase(); // args[0] é o comando
+        String command = args[0].toLowerCase();
 
         switch (command){
             case "add":
@@ -20,11 +20,20 @@ public class Main {
                     System.out.println("Uso: java -jar task-tracker.jar add <descrição>");
                     System.exit(1);
                 } else {
-                    TaskManager.addTask(args[1]); // args[1] é a descrição da tarefa
+                    TaskManager.addTask(args[1]);
                 }
                 break;
             case "list":
                 TaskManager.listTasks();
+                break;
+            case "list-todo":
+                TaskManager.listTodoTasks();
+                break;
+            case "list-in-progress":
+                TaskManager.listInProgresTasks();
+                break;
+            case "list-done":
+                TaskManager.listDoneTasks();
                 break;
             case "update-description":
                 if (args.length < 3){
@@ -52,26 +61,16 @@ public class Main {
                     }
                 }
                 break;
-            case "delete":
+            case "remove":
                 if (args.length < 2){
-                    System.out.println("Uso: java -jar task-tracker.jar delete <id>");
+                    System.out.println("Uso: java -jar task-tracker.jar remove <id>");
                     System.exit(1);
                 } else{
-                    TaskManager.deleteTask(Integer.parseInt(args[1]));
+                    TaskManager.removeTask(Integer.parseInt(args[1]));
                 }
                 break;
             case "help":
-                System.out.println("Uso: java -jar task-tracker.jar <comando>\n");
-                System.out.println("Comandos disponíveis:");
-                System.out.printf("  %-25s %s%n", "add <descrição>", "- Adiciona uma nova tarefa");
-                System.out.printf("  %-25s %s%n", "list", "- Lista todas as tarefas");
-                System.out.printf("  %-25s %s%n", "update-description <id> <descrição>", "- Atualiza a descrição de uma tarefa");
-                System.out.printf("  %-25s %s%n", "update-status <id> <status>", "- Atualiza o status de uma tarefa");
-                System.out.println("    Status disponíveis: done, in-progress");
-                System.out.printf("  %-25s %s%n", "delete <id>", "- Deleta uma tarefa");
-                System.out.printf("  %-25s %s%n", "help", "- Exibe a ajuda");
-                System.out.printf("  %-25s %s%n", "version", "- Exibe a versão do aplicativo");
-
+                TaskManager.help();
                 break;
             case "version":
                 System.out.println("Task Tracker v1.0");

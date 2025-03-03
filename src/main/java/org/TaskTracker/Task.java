@@ -8,7 +8,7 @@ public class Task {
     private Integer id;
     private String description;
     private String status;
-    private LocalDateTime createdAt;
+    private final LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     Task(String description, Integer id) {
@@ -48,6 +48,10 @@ public class Task {
         return updatedAt;
     }
 
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public void updateDescription(String description){
         this.description = description;
         this.updatedAt = LocalDateTime.now();
@@ -75,7 +79,7 @@ public class Task {
 
     public static Task fromJson(String json) {
         String idStr = json.split("\"id\": ")[1].split(",")[0].trim();
-        Integer id = Integer.valueOf(idStr); // Agora converte corretamente para Integer
+        Integer id = Integer.valueOf(idStr);
 
         String description = json.split("\"description\": \"")[1].split("\"")[0].trim();
         String status = json.split("\"status\": \"")[1].split("\"")[0].trim();
@@ -95,25 +99,6 @@ public class Task {
         }
         return LocalDateTime.parse(dateStr, DateTimeFormatter.ISO_LOCAL_DATE_TIME);    }
 
-    public static Task fromJsonObject(String json){
-        String[] data = json.split(",");
-        String description = data[1].split(":")[1].replace("\"", "");
-        ArrayList<Task>  list = FileHandler.loadJson();
-        Task task = new Task(description, list.size() + 1);
-
-        String createdAtStr = data[3].split(":")[1].replace("\"", "").trim();
-        String updatedAtStr = data[4].split(":")[1].replace("\"", "").replace("}", "").trim();
-
-
-        task.id = Integer.parseInt(data[0].split(":")[1].replace(" ", ""));
-        task.description = data[1].split(":")[1].replace("\"", "");
-        task.status = data[2].split(":")[1].replace("\"", "");
-        task.createdAt = parseDateTime(createdAtStr);
-        task.updatedAt = parseDateTime(updatedAtStr);
-
-        return task;
-    }
-
     @Override
     public String toString() {
         return "Task{id=" + id +
@@ -122,5 +107,4 @@ public class Task {
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt + '}';
     }
-
 }
