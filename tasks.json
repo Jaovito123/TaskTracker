@@ -1,9 +1,23 @@
 [
-  {
-    "Status": "Pendente",
-    "Description": "Estudar Java",
-    "CreatedAt": "2025-03-02",
-    "Id": 1,
-    "UpdatedAt": "2025-03-02"
-  }
+    {
+       "id": 1,
+       "description": "Estudar Java",
+       "status": "Todo",
+       "createdAt": "2025-03-02T22:49:44.606188669",
+       "updatedAt": "2025-03-02T22:49:44.606328122"
+    },
+    {
+       "id": 2,
+       "description": "Estudar Spring Boot",
+       "status": "Todo",
+       "createdAt": "2025-03-02T22:49:44.606360488",
+       "updatedAt": "2025-03-02T22:49:44.606366911"
+    },
+    {
+       "id": 3,
+       "description": "Estudar MySQL",
+       "status": "Todo",
+       "createdAt": "2025-03-02T22:49:44.606372810",
+       "updatedAt": "2025-03-02T22:49:44.606376130"
+    }
 ]

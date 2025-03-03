@@ -1,51 +1,73 @@
 package org.TaskTracker;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class Task {
+    private static Integer lastId = 0;
     private Integer id;
     private String description;
     private String status;
-    private LocalDate createdAt;
-    private LocalDate updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
-    Task(Integer id, String description, String status, LocalDate createdAt, LocalDate updatedAt){
-        this.id = id;
+    Task(String description){
+        this.id = ++lastId;
         this.description = description;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.status = Status.TODO.getValue();
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
     }
 
     public Integer getId() {
         return id;
     }
-    public String getDescription() {
-        return description;
-    }
+
     public String getStatus() {
         return status;
     }
-    public LocalDate getCreatedAt() {
-        return createdAt;
-    }
-    public LocalDate getUpdatedAt() {
-        return updatedAt;
+
+    public void updateDescription(String description){
+        this.description = description;
+        this.updatedAt = LocalDateTime.now();
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void updateStatusInProgres(){
+        this.status = Status.IN_PROGRESS.getValue();
+        this.updatedAt = LocalDateTime.now();
     }
-    public void setDescription(String description) {
-        this.description = description;
+
+    public void updateStatusDone(){
+        this.status = Status.DONE.getValue();
+        this.updatedAt = LocalDateTime.now();
     }
-    public void setStatus(String status) {
-        this.status = status;
+
+    public String toJsonObject(){
+        return "    {\n" +
+                "       \"id\": " + id + ",\n" +
+                "       \"description\": \"" + description + "\",\n" +
+                "       \"status\": \"" + status + "\",\n" +
+                "       \"createdAt\": \"" + createdAt + "\",\n" +
+                "       \"updatedAt\": \"" + updatedAt + "\"\n" +
+                "    }";
     }
-    public void setCreatedAt(LocalDate createdAt) {
-        this.createdAt = createdAt;
+
+    public static Task fromJsonObject(String json){
+        String[] data = json.split(",");
+        String description = data[1].split(":")[1].replace("\"", "");
+        Task task = new Task(description);
+
+        task.id = Integer.parseInt(data[0].split(":")[1]);
+        task.description = data[1].split(":")[1].replace("\"", "");
+        task.status = data[2].split(":")[1].replace("\"", "");
+        task.createdAt = LocalDateTime.parse(data[3].split(":")[1].replace("\"", ""));
+        task.updatedAt = LocalDateTime.parse(data[4].split(":")[1].replace("\"", ""));
+
+        if (task.id > lastId) {
+            lastId = task.id;
+        }
+
+        return task;
     }
-    public void setUpdatedAt(LocalDate updatedAt) {
-        this.updatedAt = updatedAt;
-    }
+
 }
